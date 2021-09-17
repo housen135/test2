@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action='' method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class='form-group'>
+        <label for='myfile'>頭像
+            <img src='/media/{{ request.user.avatar }}' alt="" width="80" style='margin-left:10px' id='myimg'>
+        </label>
+        <input type='file' id='myfile' name='avatar' style=''>
+    </div>
+
+    <input type='submit' class='btn btn-success' value='確認' id='commit'>
+    </div>
+{% endblock %}
+
+{% block js %}
+<script>
+    $('#myfile').change(function () {
+        var fileReader = new FileReader();
+
+        var fileObj = $(this)[0].files[0];
+
+        fileReader.readAsDataURL(fileObj);
+
+        fileReader.onload = function () {
+            $('#myimg').attr('src', fileReader.result)
+        }
+    });
+</script>    
+{% endblock %}

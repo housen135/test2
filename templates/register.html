@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src='{% static "jquery3.6.js" %}'></script>
+    <link rel='stylesheet' href='{% static "bootstrap/css/bootstrap.css" %}'>
+    <script src='{% static "bootstrap/js/bootstrap.js" %}'></script>
+    <title>BBS</title>
+</head>
+
+<body>
+    <div class='content-fluid'>
+        <div class='row'>
+            <div class='col-md-4 col-md-offset-3'>
+                <h2 class='text-center'>注冊</h2>
+                <form id='myform' novalidate>
+                    {% csrf_token %}
+                    {% for foo in form_obj %}
+                    <div class='form-group'>
+                        <label for='{{ foo.auto_id }}'>{{ foo.label }}</label>
+                        {{ foo }}
+                        <span style='color:brown'></span>
+                        {% endfor %}
+                        <div class='form-group'>
+                            <label for='myfile'>頭像
+                                <img src='/static/img/default.jpg' alt="" width="80" style='margin-left:10px'
+                                    id='myimg'>
+                            </label>
+                            <input type='file' id='myfile' name='avatar' style=''>
+                        </div>
+
+                        <input type='button' class='btn btn-success' value='確認' id='commit'>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        $('#myfile').change(function () {
+            var fileReader = new FileReader();
+
+            var fileObj = $(this)[0].files[0];
+
+            fileReader.readAsDataURL(fileObj);
+
+            fileReader.onload = function () {
+                $('#myimg').attr('src', fileReader.result)
+            }
+        });
+
+        // $('#commit').click(function () {
+        //     // 由于你要发送的数据即有普通的键值 又有文件 所以考虑使用内置对象FormData
+        //     var formDataObj = new FormData();
+        //     // 1 朝对象中添加普通的键值对
+        //     // $('#myform').serializeArray()自动获取到内部所有的普通键值对
+        //     $.each($('#myform').serializeArray(), function (index, obj) {
+        //         formDataObj.append(obj.name, obj.value)
+        //     });
+        //     // 2 手动添加文件数据
+        //     formDataObj.append('avatar', $('#myfile')[0].files[0]);
+
+        //     // 发送ajax请求
+        //     $.ajax({
+        //         url: '',
+        //         type: 'post',
+        //         data: formDataObj,
+
+        //         // 发送文件 需要修改两个参数
+        //         contentType: false,
+        //         processData: false,
+
+        //         success: function (data) {
+        //             if (data.code == 1000) {
+        //                 window.location.href = data.url
+        //             } else {
+        //                 $.each(data.msg, function (index, obj) {
+        //                     // index就是一个个的报错字段名  obj就是数组 里面是报错信息
+        //                     // 手动拼接对应的input框的id值
+        //                     var targetId = '#id_' + index;
+        //                     // $('#id_username') $('#id_password')
+        //                     $(targetId).next().text(obj[0]).parent().addClass('has-error')
+        //                 })
+        //             }
+        //         }
+
+        //     })
+
+        // });
+        $('#commit').click(function () {
+            var formDataObj = new FormData();
+            // console.log($('#myform').serializeArray())
+            $.each($('#myform').serializeArray(), function (index, obj) {
+                formDataObj.append(obj.name, obj.value)
+            });
+            formDataObj.append('avatar', $('#myfile')[0].files[0]);
+            $.ajax({
+                url: '',
+                type: 'post',
+                data: formDataObj,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data.code == 200) {
+                        window.location.href = data.url
+                    } else {
+                        $.each(data.msg, function (index, obj) {
+                            var targetId = '#id_' + index;
+                            $(targetId).next().text(obj[0]).parent().addClass('has-error')
+                        })
+                    }
+                }
+
+            })
+        })
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">分类</h3>
+    </div>
+    <div class="panel-body">
+        {% for cat in cat_list %}
+           <p><a href="/{{ username }}/category/{{ cat.2 }}/">{{ cat.0 }} {{ cat.1 }}篇</a></p> 
+        {% endfor %}
+    </div>
+</div>
+<div class="panel panel-warning">
+    <div class="panel-heading">
+        <h3 class="panel-title">标签</h3>
+    </div>
+    <div class="panel-body">
+        {% for tag in tag_list %}
+           <p><a href='/{{ username }}/tag/{{ tag.2 }}/'>{{ tag.0 }} {{ tag.1 }}篇</a></p> 
+        {% endfor %}
+    </div>
+</div>
+<div class="panel panel-danger">
+    <div class="panel-heading">
+        <h3 class="panel-title">日期</h3>
+    </div>
+    <div class="panel-body">
+        {% for date in date_list %}
+           <p><a href='/{{ username }}/date/{{ date.0|date:"Y-m" }}/'>{{ date.0|date:'Y-m' }} {{ date.1 }}篇</a></p> 
+        {% endfor %}
+    </div>
+</div>   

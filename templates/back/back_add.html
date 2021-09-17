@@ -1,0 +1,59 @@
+{% extends 'back/back_base.html' %}
+
+{% block add %}
+<div>
+    <h2>添加文章</h2>
+    <form action='' method='post'>
+        {% csrf_token %}
+        <p>标题</p>
+        <p>
+            <input type='text' name='title' class='form-control' id='title'>
+
+        </p>
+        <p> 内容</p>
+        <p><textarea name='content' id='content' cols='30' rows='130'></textarea>
+        </p>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">分类</h3>
+            </div>
+            <div class="panel-body">
+                {% for cat in cat_list %}
+                <input type='radio' name='cat' value="{{ cat.pk }}">{{ cat.name }}
+                {% endfor %}
+            </div>
+            <div class="panel-body">
+                {% for tag in tag_list %}
+                <input type='checkbox' name='tags' value="{{ tag.pk }}">{{ tag.name }}
+                {% endfor %}
+            </div>
+            
+
+        </div>
+        <input type='submit' value='提交'>
+    </form>
+</div>
+
+
+
+
+<script charset="utf-8" src="/static/kindeditor/kindeditor-all-min.js"></script>
+<script>
+    KindEditor.ready(function (K) {
+        window.editor = K.create('#content', {
+            width: '1000px',
+            resizeType:1,
+            uploadJson : '/upload_img/',
+            extraFileUploadParams:{
+                'csrfmiddlewaretoken':'{{ csrf_token }}'
+            }
+
+        });
+    });
+
+</script>
+{% endblock %}
+
+
+

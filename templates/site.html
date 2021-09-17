@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% for article in article_queryset %}
+    <li class ='media'><a href ='/{{ username }}/{{ article.id }}/'><h4>{{ article.title }}</h4></a></li>
+    <div class='media-left'>
+        <a href='#'>
+            <img class='media-object' src='/media/{{ article.blog.userinfo.avatar }}' alt='' width=50>
+        </a>
+    </div>
+    <div class='media-body'>
+        {{ article.desc }}
+    </div>
+    <hr>
+
+    <br>
+    <div class='pull-right'>
+        <span><a href ='#'>{{  article.blog.userinfo.username }} &nbsp; &nbsp;</a></span>
+        <span> 发布于 {{ article.create_time|date:'Y-m-d' }}&nbsp;&nbsp;</span>
+        <span class='glyphicon glyphicon-comment'>评论数 {{article.comment_num }}&nbsp; &nbsp;</span>
+        <span class='glyphicon glyphicon-thumbs-up'>点赞数 {{article.up_num }}&nbsp; &nbsp;</span>
+    </div>
+    
+    {% endfor %}
+
+{% endblock %}

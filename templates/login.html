@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src='{% static "jquery3.6.js" %}'></script>
+    <link rel='stylesheet' href='{% static "bootstrap/css/bootstrap.css" %}'>
+    <script src='{% static "bootstrap/js/bootstrap.js" %}'></script>
+    <title>BBS</title>
+</head>
+
+<body>
+    <div class='content-fluid'>
+        <div class='row'>
+            <div class='col-md-6 col-md-offset-3'>
+                <h2 class='text-center'>登录</h2>
+                <div class="form-group">
+                    <label for='username'>用户名</label>
+                    <input type='text' name='username' id='username' class='form-control'>
+                </div>
+                <div class="form-group">
+                    <label for='password'>密码</label>
+                    <input type='text' name='password' id='password' class='form-control'>
+                </div>
+                <div class="form-group">
+                    <label for='code'>验证码</label>
+                    <div class='row'>
+                        <div class='col-md-6'>
+                            <input type='text' name='code' id='code' class='form-control'>
+                        </div>
+                        <div class='col-md-6'>
+                            <img src='/get_code/' alt='' height='35' width='300' id='img'>
+                        </div>
+                    </div>
+                </div>
+                <button class='btn btn-success' id='submit'>登录</button>
+                <span id='error' style='color:red'></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#img').click(function () {
+            var oldval = $(this).attr('src');
+         $(this).attr('src', oldval += '?');
+        });
+        $('#submit').click(function () {
+            $.ajax({
+                url: '',
+                type: 'post',
+                data: {
+                    'username': $('#username').val(),
+                    'password': $('#password').val(),
+                    'code': $('#code').val(),
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function (data) {
+                    if (data.infcode == 200) {
+                        window.location.href = data.url
+                    } else {
+                        $('#error').text(data.msg)
+                    }
+
+                }
+            })
+
+        })
+    </script>
+</body>
+
+</html>

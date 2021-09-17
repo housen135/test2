@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src='{% static "jquery3.6.js" %}'></script>
+    <link rel='stylesheet' href='{% static "bootstrap/css/bootstrap.css" %}'>
+    <script src='{% static "bootstrap/js/bootstrap.js" %}'></script>
+    <title>BBS</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">自制BBS系统</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">文章 <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">热点</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">探索 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">搜索</button>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">个人</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">设置 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" data-toggle="modal" data-target=".bs-example-modal-lg">修改密码</a></li>
+                            <li><a href="#">后台管理</a></li>
+                            <li><a href="/set_img/">修改头像</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/login/">注销</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">广告</h3>
+                    </div>
+                    <div class="panel-body">
+                        五天学会画画
+                    </div>
+                </div>
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">百万大奖</h3>
+                    </div>
+                    <div class="panel-body">
+                        赶紧拨打电话领取把
+                    </div>
+                </div>
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">在线直播</h3>
+                    </div>
+                    <div class="panel-body">
+                        点我点我，有你好看~
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <ul class="media-list">
+                    {% for article in page_queryset %}
+                        <li class ='media'><a href ='/{{ article.blog.userinfo.username }}/{{ article.id }}'><h4>{{ article.title }}</h4></a></li>
+                        <div class='media-left'>
+                            <a href='#'>
+                                <img class='media-object' src='/media/{{ article.blog.userinfo.avatar }}' alt='' width=50>
+                            </a>
+                        </div>
+                        <div class='media-body'>
+                            {{ article.desc }}
+                        </div>
+
+                        <br>
+                        <span><a href ='/{{ article.blog.userinfo.username }}/'>{{  article.blog.userinfo.username }} &nbsp; &nbsp;</a></span>
+                        <span> 发布于 {{ article.create_time|date:'Y-m-d' }}&nbsp;&nbsp;</span>
+                        <span class='glyphicon glyphicon-comment'>评论数 {{article.comment_num }}&nbsp; &nbsp;</span>
+                        <span class='glyphicon glyphicon-thumbs-up'>点赞数 {{article.up_num }}&nbsp; &nbsp;</span>
+                    {% endfor %}
+
+
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-2">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">广告</h3>
+                    </div>
+                    <div class="panel-body">
+                        五天学会画画
+                    </div>
+                </div>
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">百万大奖</h3>
+                    </div>
+                    <div class="panel-body">
+                        赶紧拨打电话领取把
+                    </div>
+                </div>
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">在线直播</h3>
+                    </div>
+                    <div class="panel-body">
+                        点我点我，有你好看~
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">广告</h3>
+                    </div>
+                    <div class="panel-body">
+                        五天学会画画
+                    </div>
+                </div>
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">百万大奖</h3>
+                    </div>
+                    <div class="panel-body">
+                        赶紧拨打电话领取把
+                    </div>
+                </div>
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">在线直播</h3>
+                    </div>
+                    <div class="panel-body">
+                        点我点我，有你好看~
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class='row'>
+                    <div class='col-md-8 col-md-offset-3'>
+                        <h2 class='text-center'>修改密码</h2>
+                        <div class='form-group'>
+                            <label for='username'>用户名</label>
+                            <input type='text' name='username' disabled value='{{ request.user.username }}'
+                                id='username' class='form-control'>
+                        </div>
+                        <div class='form-group'>
+                            <label for='old_password'>老密码</label>
+                            <input type='text' name='old_password' id='old_password' class='form-control'>
+                        </div>
+                        <div class='form-group'>
+                            <label for='new_password'>密码</label>
+                            <input type='text' name='new_password' id='new_password' class='form-control'>
+                        </div>
+                        <div class='form-group'>
+                            <label for='confirm_password'>确认密码</label>
+                            <input type='text' name='confirm_password' id='confirm_password' class='form-control'>
+                        </div>
+                        <input type='button' id='bt' class='btn btn-primary' value='提交'>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+                        <span style='color:brown' id='error'></span>
+                    </div>
+                </div>
+                ...
+            </div>
+        </div>
+    </div>
+{% block js %}
+    <script>
+        $('#bt').on('click', function () {
+        $.ajax({
+            url: '/set_password/',
+            type: 'post',
+            data: {
+                'old_password': $('#old_password').val(),
+                'new_password': $('#new_password').val(),
+                'confirm_password': $('#confirm_password').val(),
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function (data) {
+                if (data.code == 200) {
+                    window.location.href = data.url
+                } else {
+                    $('#error').text(data.msg)
+                }
+            }
+        })
+    })
+    </script>
+{% endblock %}
+
+
+</body>
